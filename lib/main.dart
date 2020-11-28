@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:yog_arogyam/homepage.dart';
 import 'package:yog_arogyam/login.dart';
+import 'package:yog_arogyam/signup.dart';
 
 void main() {
   runApp(MyApp());
@@ -19,6 +21,8 @@ class _MyAppState extends State<MyApp> {
       initialRoute: 'SignIn',
       routes: {
         'SignIn': (context) => SignInScreen(),
+        'HomePage': (context) => HomePageScreen(),
+        'SignUp': (context) => SignUpScreen(),
       },
     );
   }
