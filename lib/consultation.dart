@@ -180,6 +180,18 @@ class _BookConsultationState extends State<BookConsultation> {
                     ],
                   )),
             ),
+            SizedBox(
+              height: 30,
+            ),
+            RaisedButton(
+              onPressed: () {},
+              child: Text('Make Payment',
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold)),
+              color: Colors.blue,
+            )
           ],
         ),
       ),
