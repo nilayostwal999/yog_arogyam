@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class HomePageScreen extends StatefulWidget {
   @override
@@ -91,47 +92,27 @@ class _HomePageScreenState extends State<HomePageScreen> {
                 color: Colors.blue,
               )
             ]),
-        body: Card(
-            child: InkWell(
-                onTap: () {},
-                child: DecoratedBox(
-                    position: DecorationPosition.background,
-                    decoration: BoxDecoration(
-                        shape: BoxShape.rectangle,
-                        borderRadius: BorderRadius.circular(2),
-                        border: Border.all(
-                            color: Colors.grey,
-                            width: 2,
-                            style: BorderStyle.values[1])),
-                    child: Padding(
-                        padding: EdgeInsets.all(10),
-                        child: Column(
-                          children: [
-                            RichText(
-                                text: TextSpan(
-                                    text: 'Yoga Name',
-                                    style: TextStyle(
-                                        fontSize: 23,
-                                        color: Colors.lightBlue[800],
-                                        fontWeight: FontWeight.bold))),
-                            SizedBox(
-                              height: 5,
-                            ),
-                            RichText(
-                                textAlign: TextAlign.left,
-                                overflow: TextOverflow.fade,
-                                maxLines: 3,
-                                text: TextSpan(
-                                    text: 'description',
-                                    style: TextStyle(
-                                        fontSize: 18, color: Colors.black))),
-                            Center(
-                                child: Text('Click to see instructions',
-                                    style: TextStyle(
-                                        color: Colors.blue,
-                                        decoration: TextDecoration.underline)))
-                          ],
-                          // crossAxisAlignment: CrossAxisAlignment.start,
-                        ))))));
+        body: Container(
+            alignment: Alignment.topCenter,
+            padding: EdgeInsets.all(5),
+            child: StreamBuilder(
+                stream: Firestore.instance
+                    .collection('posts')
+                    .orderBy("dateCreated", descending: true)
+                    .snapshots(),
+                builder: (context, snapshot) {
+                  if (!snapshot.hasData)
+                    return Center(
+                        child: Text(
+                      'You haven\'t posted anything yet...',
+                      style: TextStyle(fontSize: 20.0, color: Colors.black),
+                    ));
+                  return ListView.builder(
+                      itemCount: snapshot.data.documents.length,
+                      itemBuilder: (context, index) => _buildPostCard(
+                          context, snapshot.data.documents[index]));
+                })));
   }
+
+  _buildPostCard(BuildContext context, DocumentSnapshot document) {}
 }
