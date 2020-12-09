@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "397007813997",
+    "project_id": "yog-arogyam",
+    "storage_bucket": "yog-arogyam.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:397007813997:android:525c73c7ead61133e4ae64",
+        "android_client_info": {
+          "package_name": "com.yog_arogyam"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "397007813997-ud95g2le68n4vvvng21is7k4stja5o13.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyALON1mBT5An5nVGTLO4Uzg-7Xq1n_Okdc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "397007813997-ud95g2le68n4vvvng21is7k4stja5o13.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:yog_arogyam/PostModel.dart';
 
 class HomePageScreen extends StatefulWidget {
   @override
@@ -114,5 +115,77 @@ class _HomePageScreenState extends State<HomePageScreen> {
                 })));
   }
 
-  _buildPostCard(BuildContext context, DocumentSnapshot document) {}
+  _buildPostCard(BuildContext context, DocumentSnapshot document) {
+    var post = PostModel.toObject(document);
+    post.id = document.documentID;
+
+    return Card(
+        child: InkWell(
+            onTap: () {
+              /* Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => PostScreen(
+                        post)), // the builder of MaterialPageRoute will call the TodoDetail class passing the todo that was passed.
+              ); */
+            },
+            child: DecoratedBox(
+                position: DecorationPosition.background,
+                decoration: BoxDecoration(
+                    shape: BoxShape.rectangle,
+                    borderRadius: BorderRadius.circular(2),
+                    border: Border.all(
+                        color: Colors.grey,
+                        width: 2,
+                        style: BorderStyle.values[1])),
+                child: Padding(
+                    padding: EdgeInsets.all(10),
+                    child: Column(
+                      children: [
+                        RichText(
+                            text: TextSpan(
+                                text: post.title,
+                                style: TextStyle(
+                                    fontSize: 23,
+                                    color: Colors.lightBlue[800],
+                                    fontWeight: FontWeight.bold))),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text('@' + post.username,
+                                style: TextStyle(
+                                    fontSize: 20, fontWeight: FontWeight.bold)),
+                            Text(post.dateCreated,
+                                style:
+                                    TextStyle(fontSize: 18, color: Colors.grey))
+                          ],
+                        ),
+                        Center(
+                            child: (post.mediaPath != null)
+                                ? Image.network(
+                                    post.mediaPath,
+                                    fit: BoxFit.contain,
+                                    height: 250,
+                                  )
+                                : Text('')),
+                        SizedBox(
+                          height: 5,
+                        ),
+                        RichText(
+                            textAlign: TextAlign.left,
+                            overflow: TextOverflow.fade,
+                            maxLines: 3,
+                            text: TextSpan(
+                                text: post.description,
+                                style: TextStyle(
+                                    fontSize: 18, color: Colors.black))),
+                        Center(
+                            child: Text('Read More and View Resources',
+                                style: TextStyle(
+                                    color: Colors.blue,
+                                    decoration: TextDecoration.underline)))
+                      ],
+                      // crossAxisAlignment: CrossAxisAlignment.start,
+                    )))));
+  }
 }
