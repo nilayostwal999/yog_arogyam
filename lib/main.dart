@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:yog_arogyam/consultation.dart';
 import 'package:yog_arogyam/homepage.dart';
 import 'package:yog_arogyam/login.dart';
+import 'package:yog_arogyam/profile.dart';
 import 'package:yog_arogyam/signup.dart';
 
 void main() {
@@ -23,6 +25,8 @@ class _MyAppState extends State<MyApp> {
         'SignIn': (context) => SignInScreen(),
         'HomePage': (context) => HomePageScreen(),
         'SignUp': (context) => SignUpScreen(),
+        'Profile': (context) => ProfileScreen(),
+        'Consultation': (context) => BookConsultation(),
       },
     );
   }
