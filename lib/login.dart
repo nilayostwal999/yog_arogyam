@@ -1,4 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:yog_arogyam/globals.dart' as globals;
+import 'package:yog_arogyam/UserModel.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:password/password.dart';
+
+import 'UserModel.dart';
 
 class SignInScreen extends StatefulWidget {
   @override
@@ -7,7 +14,7 @@ class SignInScreen extends StatefulWidget {
 
 class _SignInScreenState extends State<SignInScreen> {
   final emailLoginController = TextEditingController();
-  final passwordController = TextEditingController();
+  final passwordLoginController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -15,11 +22,11 @@ class _SignInScreenState extends State<SignInScreen> {
       body: ListView(
         children: <Widget>[
           FractionallySizedBox(
-            widthFactor: 0.75,
+            widthFactor: 0.7,
             child: Image(image: AssetImage('assets/img/logo_title.png')),
           ),
           Padding(
-            padding: const EdgeInsets.all(20.0),
+            padding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
             child: Row(
               children: <Widget>[
                 IconButton(icon: Icon(Icons.person), onPressed: null),
@@ -35,7 +42,7 @@ class _SignInScreenState extends State<SignInScreen> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.all(20.0),
+            padding: const EdgeInsets.fromLTRB(20, 15, 20, 30),
             child: Row(
               children: <Widget>[
                 IconButton(icon: Icon(Icons.lock), onPressed: null),
@@ -43,7 +50,7 @@ class _SignInScreenState extends State<SignInScreen> {
                     child: Container(
                         margin: EdgeInsets.only(right: 20, left: 10),
                         child: TextField(
-                          controller: passwordController,
+                          controller: passwordLoginController,
                           decoration: InputDecoration(hintText: 'Password'),
                           obscureText: true,
                         ))),
@@ -54,7 +61,24 @@ class _SignInScreenState extends State<SignInScreen> {
               widthFactor: 1 / 4,
               child: RaisedButton(
                 onPressed: () {
-                  Navigator.pushReplacementNamed(context, 'HomePage');
+                  getData(emailLoginController.text.trim()).then((userDoc) => {
+                        loginUser()
+
+                        //   if (userDoc.data["password"] ==
+                        //       passwordLoginController.text)
+                        //     {onSuccess(userDoc.data)}
+                        //   else
+                        //     {
+                        //       showDialog(
+                        //         context: context,
+                        //         builder: (context) {
+                        //           return AlertDialog(
+                        //             content: Text("Password Incorrect"),
+                        //           );
+                        //         },
+                        //       )
+                        //     }
+                      });
                 },
                 child: Text(
                   'Sign In',
@@ -115,5 +139,52 @@ class _SignInScreenState extends State<SignInScreen> {
         ],
       ),
     );
+  }
+
+  getData(String uid) async {
+    final usersCollectionRef = Firestore.instance.collection("users");
+    return usersCollectionRef.document(uid).get();
+  }
+
+  onSuccess(userDataMap) async {
+    // Directory dir = await getApplicationDocumentsDirectory();
+    // String path = dir.path + "current_user.json";
+
+    // File loggedInUserFile = new File(path);
+    // // print(userDataObj);
+    // loggedInUserFile.writeAsStringSync(jsonEncode(userDataMap));
+    globals.currentUser = UserModel.toObject(userDataMap);
+    Navigator.pushReplacementNamed(context, 'HomePage');
+  }
+
+  loginUser() async {
+    try {
+      final FirebaseAuth _auth = FirebaseAuth.instance;
+      final FirebaseUser user = (await _auth.signInWithEmailAndPassword(
+              email: emailLoginController.text.trim(),
+              password:
+                  Password.hash(passwordLoginController.text, new PBKDF2())
+                      .toString()))
+          .user;
+      if (user.isEmailVerified) {
+        Firestore db = Firestore.instance;
+        DocumentSnapshot userSnapshot =
+            await db.collection("users").document(user.email).get();
+        UserModel loggedInUser = UserModel.toObject(userSnapshot);
+        globals.currentUser = loggedInUser;
+        onSuccess(userSnapshot);
+      } else {
+        showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              content: Text("Password Incorrect or User Not Verified"),
+            );
+          },
+        );
+      }
+    } catch (err) {
+      print(err);
+    }
   }
 }
