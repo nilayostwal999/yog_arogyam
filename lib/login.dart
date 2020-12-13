@@ -26,7 +26,7 @@ class _SignInScreenState extends State<SignInScreen> {
             child: Image(image: AssetImage('assets/img/logo_title.png')),
           ),
           Padding(
-            padding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
+            padding: const EdgeInsets.fromLTRB(20, 25, 20, 15),
             child: Row(
               children: <Widget>[
                 IconButton(icon: Icon(Icons.person), onPressed: null),
