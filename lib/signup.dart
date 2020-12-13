@@ -85,6 +85,9 @@ class MyCustomFormState extends State<MyCustomForm> {
 
               dateCtl.text = '${date.toLocal()}'.split(' ')[0];
             },
+            onSaved: (value) {
+              newUserModel.dob = dateCtl.text;
+            },
           ),
           TextFormField(
             keyboardType: TextInputType.emailAddress,
