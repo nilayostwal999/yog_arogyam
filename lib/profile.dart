@@ -27,6 +27,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
+      appBar: AppBar(
+        title: Text("User Profile"),
+      ),
       body: SafeArea(
         child: Column(
           children: <Widget>[
@@ -73,51 +76,74 @@ class _ProfileScreenState extends State<ProfileScreen> {
             Card(
               color: Colors.white,
               margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 25.0),
-              child: Row(
-                children: <Widget>[
-                  Icon(
-                    Icons.email,
-                    color: Colors.black,
-                  ),
-                  SizedBox(
-                    width: 10.0,
-                  ),
-                  Text(
-                    globals.currentUser.email,
-                  ),
-                ],
+              child: ListTile(
+                leading: Icon(
+                  Icons.email,
+                  color: Colors.black,
+                ),
+                title: Text(globals.currentUser.email),
               ),
             ),
-            SizedBox(height: 20.0),
+            SizedBox(height: 15.0),
             Card(
               color: Colors.white,
               margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 25.0),
-              child: Row(
-                children: <Widget>[
-                  Icon(Icons.account_circle, color: Colors.black),
-                  SizedBox(width: 10.0),
-                  Text(
-                    globals.currentUser.firstName +
-                        ' ' +
-                        globals.currentUser.lastName,
-                  ),
-                ],
+              child: ListTile(
+                leading: Icon(Icons.account_circle, color: Colors.black),
+                title: Text(
+                  globals.currentUser.firstName +
+                      ' ' +
+                      globals.currentUser.lastName,
+                ),
               ),
             ),
             SizedBox(
-              height: 20.0,
+              height: 15.0,
             ),
             Card(
               color: Colors.white,
               margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 25.0),
-              child: Row(
-                children: <Widget>[
-                  Icon(Icons.call, color: Colors.black),
-                  SizedBox(width: 10.0),
-                  Text(
-                    globals.currentUser.mobile,
-                  ),
-                ],
+              child: ListTile(
+                leading: Icon(Icons.call, color: Colors.black),
+                title: Text(
+                  globals.currentUser.mobile,
+                ),
+              ),
+            ),
+            SizedBox(height: 15.0),
+            Card(
+              color: Colors.white,
+              margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 25.0),
+              child: ListTile(
+                leading: Icon(Icons.cake, color: Colors.black),
+                title: Text(globals.currentUser.dob[8] +
+                    globals.currentUser.dob[9] +
+                    globals.currentUser.dob[7] +
+                    globals.currentUser.dob[5] +
+                    globals.currentUser.dob[6] +
+                    globals.currentUser.dob[7] +
+                    globals.currentUser.dob[0] +
+                    globals.currentUser.dob[1] +
+                    globals.currentUser.dob[2] +
+                    globals.currentUser.dob[3]),
+              ),
+            ),
+            SizedBox(
+              height: 15.0,
+            ),
+            Card(
+              color: Colors.white,
+              margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 25.0),
+              child: ListTile(
+                leading: Icon(
+                  Icons.my_location,
+                  color: Colors.black,
+                ),
+                title: Text(globals.currentUser.city +
+                    ', ' +
+                    globals.currentUser.state +
+                    ', ' +
+                    globals.currentUser.country),
               ),
             ),
           ],
