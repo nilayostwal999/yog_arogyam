@@ -81,6 +81,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     globals.currentUser.dob[3]),
               ),
             ),
+            SizedBox(
+              height: 15.0,
+            ),
             Card(
               color: Colors.white,
               margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 25.0),
