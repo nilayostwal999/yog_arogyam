@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:yog_arogyam/globals.dart' as globals;
 
 class ProfileScreen extends StatefulWidget {
   @override
@@ -33,24 +34,24 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   Icons.email,
                   color: Colors.black,
                 ),
-                title: Text(
-                  'aman.nagle1999@gmail.com',
-                ),
+                title: Text(globals.currentUser.email),
               ),
             ),
-            SizedBox(height: 20.0),
+            SizedBox(height: 15.0),
             Card(
               color: Colors.white,
               margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 25.0),
               child: ListTile(
                 leading: Icon(Icons.account_circle, color: Colors.black),
                 title: Text(
-                  'Aman Nagle',
+                  globals.currentUser.firstName +
+                      ' ' +
+                      globals.currentUser.lastName,
                 ),
               ),
             ),
             SizedBox(
-              height: 20.0,
+              height: 15.0,
             ),
             Card(
               color: Colors.white,
@@ -58,8 +59,41 @@ class _ProfileScreenState extends State<ProfileScreen> {
               child: ListTile(
                 leading: Icon(Icons.call, color: Colors.black),
                 title: Text(
-                  '9755029226',
+                  globals.currentUser.mobile,
                 ),
+              ),
+            ),
+            SizedBox(height: 15.0),
+            Card(
+              color: Colors.white,
+              margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 25.0),
+              child: ListTile(
+                leading: Icon(Icons.cake, color: Colors.black),
+                title: Text(globals.currentUser.dob[8] +
+                    globals.currentUser.dob[9] +
+                    globals.currentUser.dob[7] +
+                    globals.currentUser.dob[5] +
+                    globals.currentUser.dob[6] +
+                    globals.currentUser.dob[7] +
+                    globals.currentUser.dob[0] +
+                    globals.currentUser.dob[1] +
+                    globals.currentUser.dob[2] +
+                    globals.currentUser.dob[3]),
+              ),
+            ),
+            Card(
+              color: Colors.white,
+              margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 25.0),
+              child: ListTile(
+                leading: Icon(
+                  Icons.my_location,
+                  color: Colors.black,
+                ),
+                title: Text(globals.currentUser.city +
+                    ', ' +
+                    globals.currentUser.state +
+                    ', ' +
+                    globals.currentUser.country),
               ),
             ),
           ],

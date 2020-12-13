@@ -1,4 +1,4 @@
-library fake_to_nahin.globals;
+library yog_arogyam.globals;
 
 import 'package:yog_arogyam/UserModel.dart';
 
