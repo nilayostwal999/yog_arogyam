@@ -11,6 +11,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
+      appBar: AppBar(
+        title: Text("User Profile"),
+      ),
       body: SafeArea(
         child: Column(
           children: <Widget>[
@@ -19,8 +22,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ),
             Center(
               child: CircleAvatar(
-                radius: 100,
-                backgroundColor: Colors.blue,
+                radius: 80,
+                backgroundColor: Colors.black,
               ),
             ),
             SizedBox(
