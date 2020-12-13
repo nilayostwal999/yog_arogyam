@@ -28,33 +28,25 @@ class _ProfileScreenState extends State<ProfileScreen> {
             Card(
               color: Colors.white,
               margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 25.0),
-              child: Row(
-                children: <Widget>[
-                  Icon(
-                    Icons.email,
-                    color: Colors.black,
-                  ),
-                  SizedBox(
-                    width: 10.0,
-                  ),
-                  Text(
-                    'aman.nagle1999@gmail.com',
-                  ),
-                ],
+              child: ListTile(
+                leading: Icon(
+                  Icons.email,
+                  color: Colors.black,
+                ),
+                title: Text(
+                  'aman.nagle1999@gmail.com',
+                ),
               ),
             ),
             SizedBox(height: 20.0),
             Card(
               color: Colors.white,
               margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 25.0),
-              child: Row(
-                children: <Widget>[
-                  Icon(Icons.account_circle, color: Colors.black),
-                  SizedBox(width: 10.0),
-                  Text(
-                    'Aman Nagle',
-                  ),
-                ],
+              child: ListTile(
+                leading: Icon(Icons.account_circle, color: Colors.black),
+                title: Text(
+                  'Aman Nagle',
+                ),
               ),
             ),
             SizedBox(
@@ -63,14 +55,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
             Card(
               color: Colors.white,
               margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 25.0),
-              child: Row(
-                children: <Widget>[
-                  Icon(Icons.call, color: Colors.black),
-                  SizedBox(width: 10.0),
-                  Text(
-                    '9755029226',
-                  ),
-                ],
+              child: ListTile(
+                leading: Icon(Icons.call, color: Colors.black),
+                title: Text(
+                  '9755029226',
+                ),
               ),
             ),
           ],
