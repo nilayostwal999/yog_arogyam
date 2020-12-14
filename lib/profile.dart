@@ -69,9 +69,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
                 backgroundColor: Colors.lightBlue[800],
               )),
-          SizedBox(
-            height: 15,
-          ),
           Card(
             color: Colors.white,
             margin: EdgeInsets.symmetric(vertical: 5.0, horizontal: 25.0),
@@ -83,7 +80,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
               title: Text(globals.currentUser.email),
             ),
           ),
-          SizedBox(height: 15.0),
           Card(
             color: Colors.white,
             margin: EdgeInsets.symmetric(vertical: 5.0, horizontal: 25.0),
@@ -96,9 +92,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ),
             ),
           ),
-          SizedBox(
-            height: 10.0,
-          ),
           Card(
             color: Colors.white,
             margin: EdgeInsets.symmetric(vertical: 5.0, horizontal: 25.0),
@@ -109,7 +102,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ),
             ),
           ),
-          SizedBox(height: 10.0),
           Card(
             color: Colors.white,
             margin: EdgeInsets.symmetric(vertical: 5.0, horizontal: 25.0),
@@ -126,9 +118,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   globals.currentUser.dob[2] +
                   globals.currentUser.dob[3]),
             ),
-          ),
-          SizedBox(
-            height: 10.0,
           ),
           Card(
             color: Colors.white,
