@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:yog_arogyam/PostModel.dart';
+import 'package:yog_arogyam/globals.dart' as globals;
 
 class HomePageScreen extends StatefulWidget {
   @override
@@ -18,10 +19,13 @@ class _HomePageScreenState extends State<HomePageScreen> {
               children: [
                 UserAccountsDrawerHeader(
                   accountName: Text(
-                    "Hello firstName!\nUsername",
+                    "Hello! " +
+                        globals.currentUser.firstName +
+                        " " +
+                        globals.currentUser.lastName,
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
-                  accountEmail: Text('email'),
+                  accountEmail: Text(globals.currentUser.email),
                 ),
                 // DrawerHeader(
                 //   child: Column(
