@@ -1,5 +1,11 @@
 import 'package:flutter/material.dart';
 import 'globals.dart' as globals;
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:path/path.dart' as Path;
+import 'dart:io';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'reportModel.dart';
 
 class MedicalReports extends StatefulWidget {
   @override
@@ -7,6 +13,17 @@ class MedicalReports extends StatefulWidget {
 }
 
 class _MedicalReportsState extends State<MedicalReports> {
+  File _image;
+  final picker = ImagePicker();
+
+  Future<void> getImage() async {
+    final pickedFile = await picker.getImage(source: ImageSource.gallery);
+
+    setState(() {
+      _image = File(pickedFile.path);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -80,7 +97,15 @@ class _MedicalReportsState extends State<MedicalReports> {
         ),
         actions: [
           RaisedButton(
-            onPressed: () {},
+            onPressed: () async {
+              getImage().then((value) async => {
+                    uploadFile().then((value) async => {
+                          addResourceToPost(value),
+                          await Navigator.pushReplacementNamed(
+                              context, 'Reports')
+                        })
+                  });
+            },
             child: Text(
               'Upload a\nReport',
               style: TextStyle(
@@ -93,6 +118,74 @@ class _MedicalReportsState extends State<MedicalReports> {
           )
         ],
       ),
+      body: Container(
+          alignment: Alignment.topCenter,
+          padding: EdgeInsets.all(5),
+          child: StreamBuilder(
+              stream: Firestore.instance
+                  .collection('users')
+                  .document(globals.currentUser.email)
+                  .collection('reports')
+                  .orderBy("dateCreated", descending: true)
+                  .snapshots(),
+              builder: (context, snapshot) {
+                if (!snapshot.hasData) return Text('No comments yet!!');
+                return ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: snapshot.data.documents.length,
+                    itemBuilder: (context, index) => _buildReportCards(
+                        context, snapshot.data.documents[index]));
+              })),
+    );
+  }
+
+  Future addResourceToPost(value) async {
+    ReportModel newReport =
+        ReportModel(DateTime.now().toString().split(' ')[0], value);
+
+    await Firestore.instance
+        .collection('users')
+        .document(globals.currentUser.email)
+        .collection('reports')
+        .add(newReport.toMap());
+  }
+
+  Future<String> uploadFile() async {
+    var storageReference = FirebaseStorage.instance.ref().child(
+        'reports/${globals.currentUser.email}/${Path.basename(_image.path)}');
+    final StorageUploadTask uploadTask = storageReference.putFile(_image);
+    final StorageTaskSnapshot downloadUrl = await uploadTask.onComplete;
+    final String url = await downloadUrl.ref.getDownloadURL();
+    return url;
+  }
+
+  Widget _buildReportCards(BuildContext context, DocumentSnapshot document) {
+    var resource = ReportModel.toObject(document);
+    resource.id = document.documentID;
+
+    return Container(
+      margin: EdgeInsets.all(5),
+      decoration: BoxDecoration(
+          border: Border.all(style: BorderStyle.solid, color: Colors.black)),
+      padding: EdgeInsets.fromLTRB(5, 10, 5, 10),
+      child: Column(
+        children: <Widget>[
+          Image(image: NetworkImage(resource.imagepath)),
+          Row(
+            children: <Widget>[
+              Text(
+                resource.dateCreated,
+                style: TextStyle(color: Colors.blueGrey),
+              ),
+            ],
+          ),
+        ],
+      ),
+
+      // DecoratedBox(
+      //     decoration: BoxDecoration(
+      //         color: resource.summary == "real" ? Colors.green : Colors.red,
+      // ))
     );
   }
 }
