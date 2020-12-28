@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'package:yog_arogyam/editProfile.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
@@ -35,8 +34,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
               onPressed: () {
                 Navigator.pushNamed(context, 'ProfileEdit');
               },
-              icon: Icon(Icons.mode_edit),
-              label: Text('Edit Profile'))
+              icon: Icon(
+                Icons.mode_edit,
+                color: Colors.white,
+              ),
+              label: Text(
+                'Edit\nProfile',
+                style: TextStyle(color: Colors.white, fontSize: 15),
+                textAlign: TextAlign.center,
+              ))
         ],
       ),
       body: Column(
