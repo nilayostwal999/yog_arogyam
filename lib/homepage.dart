@@ -19,7 +19,10 @@ class _HomePageScreenState extends State<HomePageScreen> {
               children: [
                 UserAccountsDrawerHeader(
                   accountName: Text(
-                    "Hello " + globals.currentUser.firstName,
+                    "Hello! " +
+                        globals.currentUser.firstName +
+                        " " +
+                        globals.currentUser.lastName,
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                   accountEmail: Text(globals.currentUser.email),

@@ -4,6 +4,7 @@ import 'package:yog_arogyam/homepage.dart';
 import 'package:yog_arogyam/login.dart';
 import 'package:yog_arogyam/profile.dart';
 import 'package:yog_arogyam/reports.dart';
+import 'package:yog_arogyam/editProfile.dart';
 import 'package:yog_arogyam/signup.dart';
 
 void main() {
@@ -27,6 +28,7 @@ class _MyAppState extends State<MyApp> {
         'HomePage': (context) => HomePageScreen(),
         'SignUp': (context) => SignUpScreen(),
         'Profile': (context) => ProfileScreen(),
+        'ProfileEdit': (context) => Editor(),
         'Consultation': (context) => BookConsultation(),
         'Reports': (content) => MedicalReports()
       },
