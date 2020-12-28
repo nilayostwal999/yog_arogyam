@@ -61,24 +61,8 @@ class _SignInScreenState extends State<SignInScreen> {
               widthFactor: 1 / 4,
               child: RaisedButton(
                 onPressed: () {
-                  getData(emailLoginController.text.trim()).then((userDoc) => {
-                        loginUser()
-
-                        //   if (userDoc.data["password"] ==
-                        //       passwordLoginController.text)
-                        //     {onSuccess(userDoc.data)}
-                        //   else
-                        //     {
-                        //       showDialog(
-                        //         context: context,
-                        //         builder: (context) {
-                        //           return AlertDialog(
-                        //             content: Text("Password Incorrect"),
-                        //           );
-                        //         },
-                        //       )
-                        //     }
-                      });
+                  getData(emailLoginController.text.trim())
+                      .then((userDoc) => {loginUser()});
                 },
                 child: Text(
                   'Sign In',

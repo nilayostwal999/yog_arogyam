@@ -3,6 +3,7 @@ import 'package:yog_arogyam/consultation.dart';
 import 'package:yog_arogyam/homepage.dart';
 import 'package:yog_arogyam/login.dart';
 import 'package:yog_arogyam/profile.dart';
+import 'package:yog_arogyam/reports.dart';
 import 'package:yog_arogyam/signup.dart';
 
 void main() {
@@ -27,6 +28,7 @@ class _MyAppState extends State<MyApp> {
         'SignUp': (context) => SignUpScreen(),
         'Profile': (context) => ProfileScreen(),
         'Consultation': (context) => BookConsultation(),
+        'Reports': (content) => MedicalReports()
       },
     );
   }
