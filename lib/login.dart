@@ -3,7 +3,6 @@ import 'package:yog_arogyam/globals.dart' as globals;
 import 'package:yog_arogyam/UserModel.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:password/password.dart';
 
 import 'UserModel.dart';
 
@@ -61,8 +60,7 @@ class _SignInScreenState extends State<SignInScreen> {
               widthFactor: 1 / 4,
               child: RaisedButton(
                 onPressed: () {
-                  getData(emailLoginController.text.trim())
-                      .then((userDoc) => {loginUser()});
+                  loginUser();
                 },
                 child: Text(
                   'Sign In',
@@ -125,38 +123,20 @@ class _SignInScreenState extends State<SignInScreen> {
     );
   }
 
-  getData(String uid) async {
-    final usersCollectionRef = Firestore.instance.collection("users");
-    return usersCollectionRef.document(uid).get();
-  }
-
-  onSuccess(userDataMap) async {
-    // Directory dir = await getApplicationDocumentsDirectory();
-    // String path = dir.path + "current_user.json";
-
-    // File loggedInUserFile = new File(path);
-    // // print(userDataObj);
-    // loggedInUserFile.writeAsStringSync(jsonEncode(userDataMap));
-    globals.currentUser = UserModel.toObject(userDataMap);
-    Navigator.pushReplacementNamed(context, 'HomePage');
-  }
-
   loginUser() async {
     try {
-      final FirebaseAuth _auth = FirebaseAuth.instance;
-      final FirebaseUser user = (await _auth.signInWithEmailAndPassword(
-              email: emailLoginController.text.trim(),
-              password:
-                  Password.hash(passwordLoginController.text, new PBKDF2())
-                      .toString()))
+      final FirebaseUser user = (await FirebaseAuth.instance
+              .signInWithEmailAndPassword(
+                  email: emailLoginController.text.trim(),
+                  password: passwordLoginController.text))
           .user;
       if (user.isEmailVerified) {
-        Firestore db = Firestore.instance;
-        DocumentSnapshot userSnapshot =
-            await db.collection("users").document(user.email).get();
-        UserModel loggedInUser = UserModel.toObject(userSnapshot);
-        globals.currentUser = loggedInUser;
-        onSuccess(userSnapshot);
+        DocumentSnapshot userSnapshot = await Firestore.instance
+            .collection("users")
+            .document(user.email)
+            .get();
+        globals.currentUser = UserModel.toObject(userSnapshot);
+        await Navigator.pushReplacementNamed(context, 'HomePage');
       } else {
         showDialog(
           context: context,

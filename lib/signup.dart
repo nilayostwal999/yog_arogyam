@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:yog_arogyam/UserModel.dart';
-import 'package:password/password.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:country_state_city_picker/country_state_city_picker.dart';
@@ -144,7 +143,7 @@ class MyCustomFormState extends State<MyCustomForm> {
               return null;
             },
             onSaved: (value) {
-              newUserModel.password = Password.hash(value, new PBKDF2());
+              newUserModel.password = value;
             },
           ),
           Padding(
@@ -171,13 +170,12 @@ class MyCustomFormState extends State<MyCustomForm> {
           .collection("users")
           .document(newUserModel.email)
           .setData(userMap);
-
-      final FirebaseAuth _auth = FirebaseAuth.instance;
-      final FirebaseUser user = (await _auth.createUserWithEmailAndPassword(
+      final FirebaseUser user =
+          (await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: newUserModel.email,
         password: newUserModel.password,
       ))
-          .user;
+              .user;
       user.sendEmailVerification().then((value) => print("Email Sent"));
       print(user.toString());
     } catch (err) {

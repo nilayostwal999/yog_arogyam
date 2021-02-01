@@ -28,7 +28,7 @@ class _EditorState extends State<Editor> {
                 Text('Save Changes',
                     style: TextStyle(color: Colors.white, fontSize: 20))
               ]),
-              color: Colors.lightBlue[800],
+              color: Colors.blue,
               textColor: Colors.white,
             )
           ],

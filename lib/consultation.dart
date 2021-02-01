@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'globals.dart' as globals;
+import 'meetingmodel.dart';
+import 'package:stripe_payment/stripe_payment.dart';
 
 class BookConsultation extends StatefulWidget {
   @override
@@ -6,6 +10,38 @@ class BookConsultation extends StatefulWidget {
 }
 
 class _BookConsultationState extends State<BookConsultation> {
+  final db = Firestore.instance.collection("meetings");
+  Token _paymentToken;
+  String _error;
+  MeetingModel meetingModel = new MeetingModel();
+
+  final CreditCard testCard = CreditCard(
+    number: '4000002760003184',
+    expMonth: 12,
+    expYear: 21,
+  );
+
+  GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
+
+  @override
+  initState() {
+    super.initState();
+
+    StripePayment.setOptions(StripeOptions(
+        publishableKey:
+            "pk_test_51IFe1xEYpAi0hIb6WCZClm1R9toKbIupROboqUxwMA1pQPTcA7vnRR7SyrW12YIUky8LFDLMTbIej8MjnXcGu4Ri00bz4a1to7",
+        merchantId: "Test",
+        androidPayMode: 'test'));
+  }
+
+  void setError(dynamic error) {
+    _scaffoldKey.currentState
+        .showSnackBar(SnackBar(content: Text(error.toString())));
+    setState(() {
+      _error = error.toString();
+    });
+  }
+
   DateTime selectedDate = DateTime.now();
   Widget build(BuildContext context) {
     return Scaffold(
@@ -71,7 +107,29 @@ class _BookConsultationState extends State<BookConsultation> {
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
                               RaisedButton(
-                                onPressed: () {},
+                                onPressed: () {
+                                  meetingModel.email =
+                                      globals.currentUser.email;
+                                  meetingModel.slot = '10:00';
+                                  var meetMap = meetingModel.toMap();
+                                  StripePayment.createTokenWithCard(
+                                    testCard,
+                                  ).then((token) {
+                                    _scaffoldKey.currentState.showSnackBar(
+                                        SnackBar(
+                                            content: Text(
+                                                'Received ${token.tokenId}')));
+                                    setState(() {
+                                      _paymentToken = token;
+                                    });
+                                  }).then((value) => value
+                                      ? db
+                                          .document(selectedDate.toString())
+                                          .collection('Slots')
+                                          .document('10:00')
+                                          .setData(meetMap)
+                                      : Navigator.pop(context));
+                                },
                                 child: Text(
                                   '10:00 am',
                                   style: TextStyle(
@@ -180,18 +238,6 @@ class _BookConsultationState extends State<BookConsultation> {
                     ],
                   )),
             ),
-            SizedBox(
-              height: 30,
-            ),
-            RaisedButton(
-              onPressed: () {},
-              child: Text('Make Payment',
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold)),
-              color: Colors.blue,
-            )
           ],
         ),
       ),
