@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:yog_arogyam/adminpage.dart';
 import 'package:yog_arogyam/consultation.dart';
 import 'package:yog_arogyam/homepage.dart';
 import 'package:yog_arogyam/login.dart';
@@ -30,7 +31,8 @@ class _MyAppState extends State<MyApp> {
         'Profile': (context) => ProfileScreen(),
         'ProfileEdit': (context) => Editor(),
         'Consultation': (context) => BookConsultation(),
-        'Reports': (content) => MedicalReports()
+        'Reports': (content) => MedicalReports(),
+        'AdminPage': (content) => Adminpage()
       },
     );
   }

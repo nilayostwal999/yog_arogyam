@@ -107,28 +107,17 @@ class _BookConsultationState extends State<BookConsultation> {
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
                               RaisedButton(
-                                onPressed: () {
+                                onPressed: () async {
                                   meetingModel.email =
                                       globals.currentUser.email;
-                                  meetingModel.slot = '10:00';
+                                  meetingModel.slot = '10:00 am';
                                   var meetMap = meetingModel.toMap();
-                                  StripePayment.createTokenWithCard(
-                                    testCard,
-                                  ).then((token) {
-                                    _scaffoldKey.currentState.showSnackBar(
-                                        SnackBar(
-                                            content: Text(
-                                                'Received ${token.tokenId}')));
-                                    setState(() {
-                                      _paymentToken = token;
-                                    });
-                                  }).then((value) => value
-                                      ? db
-                                          .document(selectedDate.toString())
-                                          .collection('Slots')
-                                          .document('10:00')
-                                          .setData(meetMap)
-                                      : Navigator.pop(context));
+                                  await db
+                                      .document("${selectedDate.toLocal()}"
+                                          .split(' ')[0])
+                                      .collection('Slots')
+                                      .document('10:00 am')
+                                      .setData(meetMap);
                                 },
                                 child: Text(
                                   '10:00 am',
@@ -139,7 +128,18 @@ class _BookConsultationState extends State<BookConsultation> {
                                 color: Colors.green,
                               ),
                               RaisedButton(
-                                onPressed: () {},
+                                onPressed: () async {
+                                  meetingModel.email =
+                                      globals.currentUser.email;
+                                  meetingModel.slot = '11:00 am';
+                                  var meetMap = meetingModel.toMap();
+                                  await db
+                                      .document("${selectedDate.toLocal()}"
+                                          .split(' ')[0])
+                                      .collection('Slots')
+                                      .document('11:00 am')
+                                      .setData(meetMap);
+                                },
                                 child: Text(
                                   '11:00 am',
                                   style: TextStyle(
@@ -149,7 +149,18 @@ class _BookConsultationState extends State<BookConsultation> {
                                 color: Colors.green,
                               ),
                               RaisedButton(
-                                onPressed: () {},
+                                onPressed: () async {
+                                  meetingModel.email =
+                                      globals.currentUser.email;
+                                  meetingModel.slot = '12:00 pm';
+                                  var meetMap = meetingModel.toMap();
+                                  await db
+                                      .document("${selectedDate.toLocal()}"
+                                          .split(' ')[0])
+                                      .collection('Slots')
+                                      .document('12:00 pm')
+                                      .setData(meetMap);
+                                },
                                 child: Text(
                                   '12:00 pm',
                                   style: TextStyle(
@@ -164,7 +175,18 @@ class _BookConsultationState extends State<BookConsultation> {
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
                               RaisedButton(
-                                onPressed: () {},
+                                onPressed: () async {
+                                  meetingModel.email =
+                                      globals.currentUser.email;
+                                  meetingModel.slot = '1:00 pm';
+                                  var meetMap = meetingModel.toMap();
+                                  await db
+                                      .document("${selectedDate.toLocal()}"
+                                          .split(' ')[0])
+                                      .collection('Slots')
+                                      .document('1:00 pm')
+                                      .setData(meetMap);
+                                },
                                 child: Text(
                                   '01:00 pm',
                                   style: TextStyle(
@@ -174,7 +196,18 @@ class _BookConsultationState extends State<BookConsultation> {
                                 color: Colors.green,
                               ),
                               RaisedButton(
-                                onPressed: () {},
+                                onPressed: () async {
+                                  meetingModel.email =
+                                      globals.currentUser.email;
+                                  meetingModel.slot = '2:00 pm';
+                                  var meetMap = meetingModel.toMap();
+                                  await db
+                                      .document("${selectedDate.toLocal()}"
+                                          .split(' ')[0])
+                                      .collection('Slots')
+                                      .document('2:00 pm')
+                                      .setData(meetMap);
+                                },
                                 child: Text(
                                   '02:00 pm',
                                   style: TextStyle(
@@ -184,7 +217,18 @@ class _BookConsultationState extends State<BookConsultation> {
                                 color: Colors.green,
                               ),
                               RaisedButton(
-                                onPressed: () {},
+                                onPressed: () async {
+                                  meetingModel.email =
+                                      globals.currentUser.email;
+                                  meetingModel.slot = '3:00 pm';
+                                  var meetMap = meetingModel.toMap();
+                                  await db
+                                      .document("${selectedDate.toLocal()}"
+                                          .split(' ')[0])
+                                      .collection('Slots')
+                                      .document('3:00 pm')
+                                      .setData(meetMap);
+                                },
                                 child: Text(
                                   '03:00 pm',
                                   style: TextStyle(
@@ -199,7 +243,18 @@ class _BookConsultationState extends State<BookConsultation> {
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
                               RaisedButton(
-                                onPressed: () {},
+                                onPressed: () async {
+                                  meetingModel.email =
+                                      globals.currentUser.email;
+                                  meetingModel.slot = '4:00 pm';
+                                  var meetMap = meetingModel.toMap();
+                                  await db
+                                      .document("${selectedDate.toLocal()}"
+                                          .split(' ')[0])
+                                      .collection('Slots')
+                                      .document('4:00 pm')
+                                      .setData(meetMap);
+                                },
                                 child: Text(
                                   '04:00 pm',
                                   style: TextStyle(
@@ -209,7 +264,18 @@ class _BookConsultationState extends State<BookConsultation> {
                                 color: Colors.green,
                               ),
                               RaisedButton(
-                                onPressed: () {},
+                                onPressed: () async {
+                                  meetingModel.email =
+                                      globals.currentUser.email;
+                                  meetingModel.slot = '5:00 pm';
+                                  var meetMap = meetingModel.toMap();
+                                  await db
+                                      .document("${selectedDate.toLocal()}"
+                                          .split(' ')[0])
+                                      .collection('Slots')
+                                      .document('5:00 pm')
+                                      .setData(meetMap);
+                                },
                                 child: Text(
                                   '05:00 pm',
                                   style: TextStyle(
@@ -219,7 +285,18 @@ class _BookConsultationState extends State<BookConsultation> {
                                 color: Colors.green,
                               ),
                               RaisedButton(
-                                onPressed: () {},
+                                onPressed: () async {
+                                  meetingModel.email =
+                                      globals.currentUser.email;
+                                  meetingModel.slot = '6:00 pm';
+                                  var meetMap = meetingModel.toMap();
+                                  await db
+                                      .document("${selectedDate.toLocal()}"
+                                          .split(' ')[0])
+                                      .collection('Slots')
+                                      .document('6:00 pm')
+                                      .setData(meetMap);
+                                },
                                 child: Text(
                                   '06:00 pm',
                                   style: TextStyle(

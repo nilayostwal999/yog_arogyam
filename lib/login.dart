@@ -118,6 +118,21 @@ class _SignInScreenState extends State<SignInScreen> {
                 color: Colors.green[700],
                 fontWeight: FontWeight.bold),
           ),
+          SizedBox(height: 15),
+          FractionallySizedBox(
+              widthFactor: 1 / 3,
+              child: RaisedButton(
+                onPressed: () {
+                  emailLoginController.text.trim() == 'Admin'
+                      ? Navigator.pushReplacementNamed(context, 'AdminPage')
+                      : Navigator.pushReplacementNamed(context, 'SignIn');
+                },
+                child: Text(
+                  'Admin Sign In',
+                  style: TextStyle(color: Colors.black, fontSize: 18),
+                ),
+                padding: EdgeInsets.all(5),
+              )),
         ],
       ),
     );
