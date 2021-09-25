@@ -100,10 +100,24 @@ class _MedicalReportsState extends State<MedicalReports> {
             onPressed: () async {
               getImage().then((value) async => {
                     uploadFile().then((value) async => {
-                          addResourceToPost(value),
-                          await Navigator.pushReplacementNamed(
-                              context, 'Reports')
-                        })
+                          addResourceToPost(value)
+                          // .then((value) async => await showDialog(
+                          // context: context,
+                          // child: AlertDialog(
+                          //   title: Text('Report Uploaded'),
+                          //   content:
+                          //       Text('Your Report hade been uploaded.'),
+                          //   actions: [
+                          //     RaisedButton(
+                          //       onPressed: () {
+                          //         Navigator.pushReplacementNamed(
+                          //             context, 'Reports');
+                          //       },
+                          //       child: Text('OK'),
+                          //     )
+                          //   ],
+                          // )))
+                        }),
                   });
             },
             child: Text(
@@ -174,7 +188,11 @@ class _MedicalReportsState extends State<MedicalReports> {
           Row(
             children: <Widget>[
               Text(
-                resource.dateCreated,
+                resource.dateCreated.substring(8) +
+                    '-' +
+                    resource.dateCreated.substring(5, 7) +
+                    '-' +
+                    resource.dateCreated.substring(0, 4),
                 style: TextStyle(color: Colors.blueGrey),
               ),
             ],

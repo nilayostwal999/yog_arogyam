@@ -42,7 +42,7 @@ class MyCustomFormState extends State<MyCustomForm> {
             decoration: BoxDecoration(
               image: DecorationImage(
                   fit: BoxFit.fitHeight,
-                  image: AssetImage('assets/img/logo_title.png')),
+                  image: AssetImage('assets/img/logo_title.jpg')),
             ),
           ),
           TextFormField(
@@ -144,6 +144,7 @@ class MyCustomFormState extends State<MyCustomForm> {
             },
             onSaved: (value) {
               newUserModel.password = value;
+              newUserModel.firstMeet = true;
             },
           ),
           Padding(
@@ -168,7 +169,7 @@ class MyCustomFormState extends State<MyCustomForm> {
       final db = Firestore.instance;
       await db
           .collection("users")
-          .document(newUserModel.email)
+          .document(newUserModel.mobile)
           .setData(userMap);
       final FirebaseUser user =
           (await FirebaseAuth.instance.createUserWithEmailAndPassword(
@@ -176,7 +177,6 @@ class MyCustomFormState extends State<MyCustomForm> {
         password: newUserModel.password,
       ))
               .user;
-      user.sendEmailVerification().then((value) => print("Email Sent"));
       print(user.toString());
     } catch (err) {
       print(err.toString());

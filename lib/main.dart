@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:yog_arogyam/adminpage.dart';
-import 'package:yog_arogyam/consultation.dart';
+import 'package:yog_arogyam/adminReports.dart';
+import 'package:yog_arogyam/adminpagerequests.dart';
 import 'package:yog_arogyam/homepage.dart';
 import 'package:yog_arogyam/login.dart';
 import 'package:yog_arogyam/profile.dart';
 import 'package:yog_arogyam/reports.dart';
 import 'package:yog_arogyam/editProfile.dart';
 import 'package:yog_arogyam/signup.dart';
+import 'adminPageMeetings.dart';
+import 'history.dart';
+import 'historysearch.dart';
 
 void main() {
   runApp(MyApp());
@@ -30,9 +33,12 @@ class _MyAppState extends State<MyApp> {
         'SignUp': (context) => SignUpScreen(),
         'Profile': (context) => ProfileScreen(),
         'ProfileEdit': (context) => Editor(),
-        'Consultation': (context) => BookConsultation(),
-        'Reports': (content) => MedicalReports(),
-        'AdminPage': (content) => Adminpage()
+        'Reports': (context) => MedicalReports(),
+        'AdminPageRequests': (context) => Adminpage(),
+        'AdminPageMeetings': (context) => AdminpageMeetings(),
+        'AdminReports': (context) => AdminReports(),
+        'HistoryPage': (context) => History(),
+        'HistorySearch': (context) => HistorySearch(),
       },
     );
   }

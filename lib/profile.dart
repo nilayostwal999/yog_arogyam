@@ -50,40 +50,43 @@ class _ProfileScreenState extends State<ProfileScreen> {
           SizedBox(
             height: 20,
           ),
-          Center(
-            child: CircleAvatar(
+          Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+            CircleAvatar(
                 radius: 90,
                 backgroundImage: (globals.currentUser.imagePath != null)
                     ? NetworkImage(globals.currentUser.imagePath)
                     : AssetImage('assets/img/logo_title.png')),
+          ]),
+          SizedBox(
+            height: 10,
           ),
-          Positioned(
-              top: 180,
-              child: CircleAvatar(
-                child: IconButton(
-                  icon: Icon(
-                    Icons.add_photo_alternate,
-                    color: Colors.white,
-                  ),
-                  onPressed: () async {
-                    getImage().then((value) async => {
-                          deleteImage(),
-                          uploadFile().then((value) async => {
-                                globals.currentUser.imagePath = value,
-                                await Firestore.instance
-                                    .collection('users')
-                                    .document(globals.currentUser.email)
-                                    .setData({
-                                  'imagePath': globals.currentUser.imagePath
-                                }, merge: true),
-                                await Navigator.pushReplacementNamed(
-                                    context, 'Profile')
-                              })
-                        });
-                  },
+          Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+            CircleAvatar(
+              child: IconButton(
+                icon: Icon(
+                  Icons.add_photo_alternate,
+                  color: Colors.white,
                 ),
-                backgroundColor: Colors.lightBlue[800],
-              )),
+                onPressed: () async {
+                  getImage().then((value) async => {
+                        deleteImage(),
+                        uploadFile().then((value) async => {
+                              globals.currentUser.imagePath = value,
+                              await Firestore.instance
+                                  .collection('users')
+                                  .document(globals.currentUser.email)
+                                  .setData({
+                                'imagePath': globals.currentUser.imagePath
+                              }, merge: true),
+                              await Navigator.pushReplacementNamed(
+                                  context, 'Profile')
+                            })
+                      });
+                },
+              ),
+              backgroundColor: Colors.lightBlue[800],
+            )
+          ]),
           Card(
             color: Colors.white,
             margin: EdgeInsets.symmetric(vertical: 5.0, horizontal: 25.0),

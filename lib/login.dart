@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:yog_arogyam/globals.dart' as globals;
 import 'package:yog_arogyam/UserModel.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import 'UserModel.dart';
@@ -22,7 +21,7 @@ class _SignInScreenState extends State<SignInScreen> {
         children: <Widget>[
           FractionallySizedBox(
             widthFactor: 0.7,
-            child: Image(image: AssetImage('assets/img/logo_title.png')),
+            child: Image(image: AssetImage('assets/img/logo_title.jpg')),
           ),
           Padding(
             padding: const EdgeInsets.fromLTRB(20, 25, 20, 15),
@@ -74,12 +73,12 @@ class _SignInScreenState extends State<SignInScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
                   Text(
-                    'Doesn\'t have an account?\nMake One',
+                    "If you don't have an account\nPlease make one by signing up",
                     textAlign: TextAlign.center,
                     style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
                   ),
-                  InkWell(
-                    onTap: () {
+                  RaisedButton(
+                    onPressed: () {
                       Navigator.pushNamed(context, 'SignUp');
                     },
                     child: Text(
@@ -123,9 +122,13 @@ class _SignInScreenState extends State<SignInScreen> {
               widthFactor: 1 / 3,
               child: RaisedButton(
                 onPressed: () {
-                  emailLoginController.text.trim() == 'Admin'
-                      ? Navigator.pushReplacementNamed(context, 'AdminPage')
-                      : Navigator.pushReplacementNamed(context, 'SignIn');
+                  if (emailLoginController.text.trim() == 'Admin') {
+                    if (passwordLoginController.text == 'YA**123')
+                      Navigator.pushReplacementNamed(
+                          context, 'AdminPageRequests');
+                  } else {
+                    Navigator.pushReplacementNamed(context, 'SignIn');
+                  }
                 },
                 child: Text(
                   'Admin Sign In',
@@ -140,24 +143,19 @@ class _SignInScreenState extends State<SignInScreen> {
 
   loginUser() async {
     try {
-      final FirebaseUser user = (await FirebaseAuth.instance
-              .signInWithEmailAndPassword(
-                  email: emailLoginController.text.trim(),
-                  password: passwordLoginController.text))
-          .user;
-      if (user.isEmailVerified) {
-        DocumentSnapshot userSnapshot = await Firestore.instance
-            .collection("users")
-            .document(user.email)
-            .get();
-        globals.currentUser = UserModel.toObject(userSnapshot);
+      DocumentSnapshot userSnapshot = await Firestore.instance
+          .collection("users")
+          .document(emailLoginController.text)
+          .get();
+      globals.currentUser = UserModel.toObject(userSnapshot);
+      if (globals.currentUser.password == passwordLoginController.text) {
         await Navigator.pushReplacementNamed(context, 'HomePage');
       } else {
         showDialog(
           context: context,
           builder: (context) {
             return AlertDialog(
-              content: Text("Password Incorrect or User Not Verified"),
+              content: Text("Password Incorrect"),
             );
           },
         );
